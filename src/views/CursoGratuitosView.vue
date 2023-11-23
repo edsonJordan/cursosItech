@@ -6,7 +6,6 @@
     import { create as createInscripcion } from '../services/inscripciones';
     import Login from '@/components/auth/login.vue';
     import Modal from '@/components/modals/Modal.vue'; 
-    import { useToast } from 'vue-toastification';
     import { isTokenExpired } from '@/credentials/tokken';
     import { mapActions, mapGetters  } from 'vuex';
 
@@ -36,8 +35,9 @@
             worldActive,
             categories:[],
             originalCursos: [],
+            originalCategories:[],
             cursos:[],
-            searchCursos:[],
+            searchCategories:[],
             searchText: "",
             mostrarLoginModal: false,
             mostrarModalMensaje:false,
@@ -62,11 +62,20 @@
             if (newValue === true) {
                 const dataItech= JSON.parse(localStorage.getItem('itechData'));
                 let cursos = dataItech.data.cursos;
+                let categories = dataItech.data.categorias;
                 this.originalCursos = cursos;
                 this.cursos = this.originalCursos.slice();
-
-                this.categories = dataItech.data.categorias;
-
+                this.categories = categories;
+                this.originalCategories=categories;
+                
+                /* 
+                
+                let cursos = dataItech.data.cursos;
+                let categorias = dataItech.data.categorias;
+                this.originalCursos = cursos;
+                this.cursos = this.originalCursos.slice();
+                this.categories = categorias;
+                */
             }
         },
     },
@@ -107,55 +116,35 @@
 
             const date = new Date(dateString);
             return date.toLocaleDateString('es-ES', options);
-        },
-        showToast() {
-            const toast = useToast();
-            toast.success('¡Inscripción Exitosa!', {
-                    toastClassName: "toast__danger",
-                    position: "bottom-left",
-                    timeout: 4000,
-                    closeOnClick: true,
-                    pauseOnFocusLoss: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    draggablePercent: 0.6,
-                    showCloseButtonOnHover: false,
-                    hideProgressBar: true,
-                    closeButton: "button",
-                    icon: true,
-                    rtl: false
-                });
-            // También puedes usar toast.error, toast.info, toast.warning según tus necesidades
-        },
+        },       
         clearSearch() {
             this.inputBlurHandler(); // Quita el enfoque del campo de entrada
             this.searchText = ''; // Borra el texto del campo de búsqueda
-            this.searchCursos = this.originalCursos.slice();
+            this.searchCategories = this.categories.slice();
         },
         inputFocusHandler() {
             this.isInputFocused = true;
-            this.searchCursos = this.originalCursos.slice();
+            this.searchCategories = this.categories.slice();
         },
         inputBlurHandler() {
             this.isInputFocused = false;
             this.searchText = ''; // Borra el texto del campo de búsqueda
-            this.searchCursos = this.originalCursos.slice();
-            
+            this.searchCategories = this.categories.slice();
+        },        
+        searchingCategories() {
+            if (this.searchText.trim() === "") {
+            // Si el campo de búsqueda está vacío, mostrar todos los cursos originales
+            this.searchCategories = this.categories.slice();
+            } else {
+            this.searchCategories = this.categories.filter((categoria) => {
+                return categoria.name.toLowerCase().includes(this.searchText.toLowerCase());
+            });
+            }
         },
+
+
         mostrarTodos() {
             this.cursos = this.originalCursos.slice();
-        },
-        searchCourses() {
-            if (this.searchText.trim() === "") {
-      // Si el campo de búsqueda está vacío, mostrar todos los cursos originales
-            this.searchCursos = this.originalCursos.slice();
-            } else {
-            // Filtrar los cursos basados en el atributo "title"
-            this.searchCursos = this.originalCursos.filter((curso) => {
-                return curso.title.rendered.toLowerCase().includes(this.searchText.toLowerCase());
-            });
-            // console.log(this.searchCursos);
-            }
         },
         filtrarCursos(categoriaId) {   
             this.activeCategory = categoriaId;
@@ -196,7 +185,6 @@
             }            
             this.showLoading();
             const tokken = isTokenExpired();
-            // console.log(tokken);
             if(tokken.isExpired){
                 localStorage.removeItem('jwtToken');
                 this.$store.commit('SET_IS_LOGIN', false);
@@ -207,7 +195,6 @@
             }
                 try {
                 let fechaConHora = fechaInicio + ' 00:00:00';
-                    // console.log( tokken.credential.id);
                 // return 
                     const data = {
                         form_id: parseInt(formId),
@@ -232,7 +219,6 @@
                     this.linkWhastapp=linkWhastapp
                 }
                 this.hideLoading();
-            // console.log("Inscrito en evento");
         },      
         getData(){
             const dataItech = isDataExpired();
@@ -245,10 +231,6 @@
                 this.categories = categorias;
 
             }
-            // const dataItech= JSON.parse(localStorage.getItem('itechData'));
-            // let cursos = dataItech.data;
-            // this.originalCursos = cursos;
-            // this.cursos = this.originalCursos.slice();
         },
         formatDiasSemana(dias) {
             const length = dias.length;
@@ -272,16 +254,16 @@
                     <div action="" class="formSearch" :class="{ active: isInputFocused  }">
                         <div class="inpute__search">
                             <font-awesome-icon class="p-2 font-bold text-xl" icon="magnifying-glass" />
-                            <input v-model="searchText" placeholder="¿Qué quieres aprender hoy?" @input="searchCourses"  @focus="inputFocusHandler" class="input__text" type="text" name="" id="">
+                            <input v-model="searchText" placeholder="¿Qué quieres aprender hoy?" @input="searchingCategories"  @focus="inputFocusHandler" class="input__text" type="text" name="" id="">
                             <!--  @blue="inputBlurHandler" @keydown="checkEscapeKey" -->
                             <font-awesome-icon v-if="this.isInputFocused" @click="inputBlurHandler" class="p-2 cursor-pointer font-bold text-xl" :icon="['far', 'circle-xmark']" />
                         </div>
                         <div class="items__search">
-                            <div class="course__item-search" v-for="item in searchCursos" :key="item.id">
-                                <div class="search__course">
-                                    <h3>{{ item.title.rendered }}</h3>
+                            <div class="course__item-search" v-for="item in searchCategories" :key="item.id">
+                                <div @click="filtrarCursos(item.id); inputBlurHandler()" class="search__course">
+                                    <h3 >{{ item.name }}</h3>
                                     <!-- Resto de la información del curso -->
-                                    <button class="btn btn--pill text-white" @click="registrarCurso(item.formulario_curso, item.curso_fecha_inicio, item.id, item.whatsapp_link, item.google_meet_link)">Inscribirme</button>
+                                    <!-- <button class="btn btn--pill text-white" @click="registrarCurso(item.formulario_curso, item.curso_fecha_inicio, item.id, item.whatsapp_link, item.google_meet_link)">Inscribirme</button> -->
                                 </div>
                             </div>
                         </div>
@@ -331,7 +313,7 @@
                             </ul>
                             <div class="course__actions">
                                 <button class="btn btn--pill" @click="registrarCurso(item.formulario_curso, item.curso_fecha_inicio, item.id, item.whatsapp_link , item.google_meet_link)" href="#">Inscribirme</button>
-                                <!-- <a class="btn btn--pill danger" href="#">Clases en vivo</a> -->                               
+                                                           
                             </div>
                         </div>
                     </div>
@@ -346,15 +328,11 @@
                         </template>
                     </Login>
         </Modal>
-        <Modal :mostrar="mostrarModalMensaje" @cerrar-modal="cerrarModalMensaje"> 
-           
-            
+        <Modal :mostrar="mostrarModalMensaje" @cerrar-modal="cerrarModalMensaje">     
             <div v-if="errorMensaje" class="error-message max-w-xs pt-2" :class="{ 'text-red-600 font-bold text-2xl text-center': errorMensaje }" v-html="errorMensaje"></div>
             <div v-if="successMessage" class="success-message max-w-xs pt-2" :class="{ 'text-green-500 font-bold text-2xl text-center': successMessage }" v-html="successMessage"></div>
             <br>
-
             <p>Ingresa en:  </p>
-            
             <br>
             <div class="flex flex-col gap-4">
                 <div v-if="linkWhastapp" class="w-full flex justify-center items-center ">
