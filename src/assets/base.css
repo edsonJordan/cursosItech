@@ -1,0 +1,729 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+*{
+    /* outline: 1px solid red; */
+}
+
+body{
+    font-family: 'roboto' !important;
+}
+
+.content__banner {
+    @apply relative h-fit overflow-hidden;
+}
+
+.video-background {
+    @apply absolute top-0 right-0 bottom-0 left-0 -z-10;
+}
+
+.video__banner {
+    @apply min-h-full min-w-full w-auto h-auto object-cover;
+}
+
+.gradient-overlay {
+    @apply absolute top-0 right-0 bottom-0 left-0 z-0 bg-transparent;
+    background-image: radial-gradient(at center center, #004BA1 0%, #17223D 100%);
+    opacity: 0.93;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}
+.gradient-overlay-section {
+    @apply absolute bg-white top-0 right-0 bottom-0 left-0 z-10 bg-transparent;
+
+    background-image: radial-gradient(at center center, #004BA1 0%, #17223D 100%);
+    opacity: 0.93;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+  
+}
+/* Start Section banner index  */
+.section{
+    @apply font-roboto relative  w-full;
+}
+.section__banner{
+    @apply tablet:pt-[76px] 
+}
+.contenido__banner{
+    @apply relative flex flex-col z-50 gap-y-4  text-center justify-center items-center text-white max-w-7xl mx-auto  
+}
+.contenido__banner .title{
+    @apply flex flex-col font-extrabold items-center
+    text-2xl 
+    tablet:text-5xl
+}
+.contenido__banner .title span:nth-child(2){
+    @apply text-yellow w-fit relative;
+}
+.banner__text{
+    @apply flex flex-col gap-y-8 items-center
+}
+.banner__image{
+    @apply w-fit h-fit
+}
+.banner__text .title{
+    @apply relative w-fit;
+}
+.contenido__banner .paragraph{
+    @apply text-base font-semibold
+    tablet:text-xl;
+    
+}
+.banner__text svg{
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    transform: translate(-50%,-50%);
+    overflow: visible;   
+    fill: #ffff;
+}
+.title svg path {
+    @apply stroke-white;
+    stroke-width: 10;
+    fill: none;
+    opacity: 0; /* Inicialmente, el elemento está oculto */
+    stroke-dasharray: 0 1500;
+    animation: appear 2.2s forwards 2.5s, disappear 2.2s forwards 4.7s, pause 6s forwards 6.9s;
+    /* Mantén los estilos al final de la animación */
+}
+.title svg path:nth-child(2) { 
+    animation-delay: 2.9s; 
+}
+
+@keyframes appear {
+    0% {
+        stroke-dasharray: 0 1500;
+        opacity: 0; /* Empieza con opacity 0 */
+    }
+    100% {
+        stroke-dasharray: 1500 1500;
+        opacity: 1; /* Termina con opacity 1 */
+    }
+}
+
+@keyframes disappear {
+    0% {
+        stroke-dasharray: 1500 1500;
+        opacity: 1; /* Empieza con opacity 1 */
+    }
+    100% {
+        stroke-dasharray: 0 1500;
+        opacity: 0; /* Termina con opacity 0 */
+    }
+}
+
+@keyframes pause {
+    0%, 100% {
+        /* Mantén la opacidad en 0 durante el período de pausa */
+        opacity: 0;
+    }
+}
+
+/* Components */
+.btn{
+    @apply text-base rounded-3xl block w-fit
+}
+.btn--pill{
+    @apply bg-skyBlue py-[10px] px-6 hover:bg-skyBlueHover;
+}
+.btn.danger{
+    @apply bg-red-700 rounded
+}
+.content__navigation .btn--pill{
+    @apply py-2 px-4 text-white border border-white font-semibold 
+}
+
+.content{
+    @apply px-4 py-10
+    relative
+    gap-y-6    
+    flex
+    flex-col items-center
+    z-10
+    tablet:px-6 tablet:py-14 
+    laptop:px-8 laptop:py-16
+    desktop:px-12 desktop:py-20
+    4k:px-16 4k:py-24
+}
+.content:not(.content__banner,.content__footer, .content__search-course){
+    @apply  max-w-7xl mx-auto min-h-screen items-center justify-center gap-y-12;
+}
+
+.content .content__text{
+    @apply text-white gap-y-12
+}
+.content .content__text .title{
+    @apply flex flex-col gap-1  font-extrabold items-center
+    text-2xl
+    tablet:flex-row tablet:text-[43px] tablet:gap-2  tablet:leading-10
+   
+}
+.title-services{
+    @apply flex-col
+}
+.content .content__text .title span:nth-child(2){
+    @apply text-yellow w-fit relative;
+}
+.content__text{
+    @apply flex flex-col text-center gap-y-12 items-center
+}
+.content__text .paragraph{
+    @apply  font-semibold text-lg
+    tablet:text-[20px];
+    
+}
+
+.content__text svg{
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    transform: translate(-50%,-50%);
+    overflow: visible;   
+    fill: #ffff;
+}
+    /* Start cards */
+
+    .card__header{
+        @apply font-semibold
+    }
+    .card__header .image-service{
+        @apply object-cover h-fit w-fit;
+    }
+    .card__body{
+        @apply font-medium
+    }
+    .card-testimonial{
+        @apply flex flex-col max-w-xs
+    }
+    .card-testimonial .card__header{
+        @apply py-8 px-10 text-white;
+    }
+    .card-testimonial .card__header h2{
+        @apply  font-semibold text-2xl;
+    }
+    .card-testimonial .card__header p{
+        @apply  font-light text-lg text-gray-400;
+    }
+    .card-testimonial .card__body{
+        @apply text-white font-light bg-blueTestimonial py-8 px-10;
+    }
+    /* End Cards */
+
+    /* Start Sliders */
+    .carousel__slide{
+      align-items: self-start !important;
+    }
+    .carousel{
+        @apply w-full
+    }
+    .slider {
+        position: relative;
+    }
+    
+    .slider-container {
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        height: 100%;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        transition: background-color 0.5s ease;
+    }
+  
+    
+    .slider-item {
+        position: relative;
+        min-width: 100%;
+        scroll-snap-align: center;
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+    
+    }
+    
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    /* End Slider */
+
+
+/* End Components */
+
+
+/* Start Section Courses recordeds */
+.content__course-recorded{
+    @apply flex flex-col items-center
+}
+/* End Section Courses recordeds */
+
+/* Start Section Services */
+.content__service{
+    @apply flex flex-col items-center w-full;
+}
+.cards__services{
+    @apply flex w-full flex-col gap-y-20 items-center  gap-x-16
+    tablet:flex-row
+}
+.card-service{
+    @apply flex max-w-lg justify-center flex-col items-center  text-center text-white gap-y-5
+   
+}
+
+.card-service .card__header{
+    @apply text-2xl font-semibold flex flex-col
+}
+.card-service .card__body{
+    @apply text-base pb-8
+}
+/* End Section Services */
+
+/* Section institutions */
+
+.title .title-intitutions{
+    @apply flex-row
+}
+.content .content__text .title.title-intitutions{
+    @apply flex-row
+}
+.cards__count-participants{
+    @apply flex flex-col  justify-center
+    tablet:flex-row tablet:flex-wrap
+}
+.cards__count-participants .card{
+    @apply flex flex-col justify-center min-w-[280px] p-[10px]
+    items-center text-white text-center
+    gap-y-6
+}
+.cards__count-participants .card h2{
+    @apply text-[32px]
+}
+.cards__count-participants .card p{
+    @apply text-sm
+}
+.icon__image{
+    @apply h-[70px] w-[70px] rounded-full border-white border-4
+}
+.image__participants{
+    @apply fill-white object-contain h-full w-full p-3
+}
+/* End Section institutions */
+/* Start Section work with we */
+.cards__works{
+    @apply flex w-full flex-col gap-y-14 items-center 
+    laptop:flex-row laptop:justify-center laptop:gap-x-8 laptop:items-start
+}
+.cards__works .card{
+    @apply flex flex-col  justify-start  p-[10px] max-w-[320px]
+    items-start text-white text-center
+    gap-y-6
+}
+.cards__works .card .card__header{
+    @apply tablet:pb-9
+}
+.cards__works .card .card__footer{
+    @apply flex flex-col gap-4 items-center
+}
+.cards__works .card .card__footer .btn{
+    @apply w-fit
+}
+.cards__works .card h2{
+    @apply text-[24px] pb-5
+}
+.cards__works .card p{
+    @apply text-base font-medium
+}
+.card__body ul {
+    @apply flex flex-col gap-y-1
+}
+.card__body ul li{
+    @apply flex flex-row justify-start gap-x-2 font-normal text-left
+}
+.card__body ul li svg{
+    @apply min-w-[18px] max-h-[18px] object-contain fill-white
+}
+/* End section work with we */
+
+/* Start Section Searching */
+
+.section__search-course{
+    @apply bg-transparent laptop:flex laptop:justify-center laptop:items-center laptop:overflow-hidden min-h-screen ;
+    /* background: rgb(42,148,253); */
+    /* background: linear-gradient(120deg, rgba(42,148,253,1) 0%, rgba(13,46,89,1) 100%); */
+}
+.content__search-course{
+    
+    @apply relative w-full mobile:pt-6  py-0 laptop:pt-40 px-0 flex justify-center pb-8 max-w-7xl gap-y-4
+     laptop:gap-y-12 
+}
+.contenido__search-course {
+    @apply w-full max-w-4xl pt-[76px] px-6
+}
+.contenido__search-course input {
+    @apply w-full rounded-md h-[40px] z-50 outline-none
+}
+.inpute__search{
+    @apply flex py-1 px-5 flex-row bg-white rounded-[4px] justify-center items-center text-gray-600 text-base;
+    box-shadow: 0px 4px 4px 0px rgba(60, 81, 94, 0.33);
+}
+.inpute__search:focus-within{
+    box-shadow: 0px 4px 14px 8px rgba(60, 81, 94, 0.33);
+}
+.items__search{
+    @apply   flex-col -top-[1500px] absolute  w-full bg-white transition-all ease-in-out duration-500 
+        px-4
+    ;
+}
+
+.formSearch{
+    @apply relative;
+}
+.formSearch.active .items__search{
+    @apply flex flex-col absolute z-50 top-14 w-full py-4 px-2 rounded-lg;
+    box-shadow: 0px 4px 25px 0px rgba(60, 81, 94, 0.33);
+}
+.inpute__search i{
+    @apply  text-2xl
+}
+.input__text::placeholder{
+    @apply text-dark-gray-100
+}
+.input__text{
+    @apply font-semibold text-lg text-dark-gray-100
+}
+.input__text + i{
+    @apply hidden
+}
+.input__text:focus + i{
+    @apply block
+}
+.list__categories{
+    @apply flex   flex-row px-4 gap-0 w-full laptop:justify-center overflow-x-scroll ;
+}
+.list__categories::-webkit-scrollbar {
+    display: none;
+  }
+.category__item {
+    @apply flex flex-col h-fit w-fit gap-[10px]  text-center  items-center text-white font-semibold;
+   
+}
+.category__item p{
+    @apply w-fit text-dark-gray-400 font-medium text-base
+}
+
+.category__image{
+    @apply flex justify-center rounded-full min-w-[125px];
+}
+.category__image .img{
+    @apply w-[51px] h-[48px] flex justify-center items-center
+    rounded-lg
+    ;
+    box-shadow: 0px 6px 6px 0px rgba(60, 81, 94, 0.45);
+}
+/* Toast */
+.Vue-Toastification__toast.toast__success{
+    background-color: #22C55E;
+}
+
+.Vue-Toastification__toast.toast__alert{
+    background-color: #F59E0B;
+}
+.Vue-Toastification__toast.toast__danger{
+    background-color: #EF4444;
+}
+
+.Vue-Toastification__toast-body{
+    @apply flex items-center
+}
+
+
+
+.category__image .img .icon{
+    @apply w-[32px] h-[32px];
+}
+.category__item.active .category__image .img{
+    box-shadow: 0px 2px 2px 0px rgba(60, 81, 94, 0.45);
+    transition: all .200s ease-in ;
+
+}
+
+.category__item .category__image .img  .icon.active{
+    display:none;
+}
+
+
+.category__item.active .category__image .img  .icon.active{
+    display:initial;
+}
+
+.category__item.active .category__image .img  .icon.default{
+    display:none;
+}
+
+.list__courses{
+    @apply flex px-4 gap-8 justify-center  w-full flex-wrap relative min-h-[600px]
+}
+.course__item{
+        @apply cursor-pointer h-fit overflow-hidden flex flex-col  items-center font-semibold border-2 rounded-xl border-white
+        min-w-[250px]  max-w-xs   justify-between text-dark-gray
+        laptop:gap-y-2 transition-all duration-300 ;
+        box-shadow: 0px 8px 8px 0px rgba(60, 81, 94, 0.25);
+}
+.course__item-search{
+    @apply flex flex-col gap-3 px-4 py-2
+}
+.course__item-search .search__course:hover h3{
+    @apply text-white
+}
+.search__course{
+    @apply w-full py-2 flex items-center justify-between px-4 hover:bg-skyBlue cursor-pointer
+}
+.search__course .btn--pill{
+    @apply m-0
+}
+.list__courses::-webkit-scrollbar {
+    display: none;
+  }
+
+.image__course{
+    @apply object-cover box-border border-0 w-full h-52
+}
+.course__item h3{
+    @apply flex text-center items-start text-dark-gray-400 h-16 justify-center text-2xl font-semibold 
+   
+}
+
+
+.course__content{
+    @apply flex flex-col py-5 px-4 gap-y-2 w-full
+}
+.course__talk{
+    @apply font-medium  text-sm flex flex-col gap-y-1
+}
+.course__item .course__talk{
+    @apply h-36
+}
+
+.course__actions{
+    @apply flex justify-center flex-col items-center gap-y-4
+}
+
+.course__item:hover{
+    @apply h-fit transition-all  duration-500
+}
+.course__item:hover > .course__content > *{
+    @apply flex  transition-all duration-500
+}
+
+.course__item .btn{
+    @apply text-white
+}
+/* End Section Searching */
+
+
+
+
+/* Start Navigation */
+
+.navigation{
+    @apply bg-darkBlue  h-[76px] flex items-center 
+     top-0 w-full z-40 tablet:fixed
+}
+.navigation.transparente{
+    @apply bg-transparent z-20
+}
+.navigation.transparente .content__navigation .logo__nav:not(.menu__mobile .logo__nav){
+    @apply hidden tablet:block
+}
+.content__navigation{
+    @apply flex relative justify-between items-center w-full max-w-7xl m-auto
+    laptop:py-0
+}
+.navigation__mobile{
+    @apply bg-darkBlue z-50 p-4 flex flex-col gap-5 fixed top-0 -left-full h-screen w-screen duration-500 transition-all 
+    laptop:hidden
+}
+.navigation__mobile .navigation__list{
+    @apply flex flex-col gap-2
+}
+.navigation__mobile.active{
+    @apply fixed left-0 h-full w-full transition-all  duration-500
+}
+.menu__mobile{
+    @apply flex flex-row justify-between
+}
+.menu__mobile .logo__nav{
+    @apply block  
+}
+.menu__mobile .logo__nav img{
+    @apply object-contain w-32
+}
+.icon__menu{
+    @apply fill-white p-2 laptop:hidden
+}
+
+
+.icon__menu a svg{
+    @apply  fill-white  h-5 w-5
+}
+.navigation__list{
+    @apply text-white m-0
+}
+.navigation__list li{
+
+}
+.navigation__list li i{
+    @apply text-2xl
+}
+.navigation__list a{
+    @apply flex items-center rounded-md gap-x-1 px-4 py-2;
+}
+.navigation__list a.active{
+    @apply bg-skyBlue text-hardBlue font-medium
+}
+.navigation__list li ul {
+    @apply ml-0
+}
+.navigation__list li ul li{
+    @apply pl-14
+}
+.menu__close{
+    @apply block  p-1
+}
+.menu__close i{
+    @apply text-skyBlue h-fit text-3xl
+}
+.content__navigation .logo__nav img{
+    @apply block  object-contain h-[64px]
+}
+.content__navigation a i{
+    @apply text-2xl text-white 
+}
+.navigation__desktop{
+    @apply hidden laptop:flex
+}
+.navigation__desktop .navigation__list{
+    @apply  flex flex-row
+}
+.navigation__desktop .navigation__list a{
+     @apply text-white relative hover:bg-hardBlue
+}
+
+.navigation__desktop .navigation__list a.active{
+    @apply bg-transparent
+}
+.navigation__desktop .navigation__list a.active::after{
+    @apply bg-skyBlue left-0  w-full;
+    content: "";
+    display: block;
+    height: 2px;
+    position: absolute;
+    top: 3.55rem
+
+}
+.navigation__desktop .navigation__list li ul{
+    @apply absolute top-full  flex-col z-50 
+}
+.navigation__desktop li ul{
+    @apply opacity-0
+}
+.navigation__desktop li:hover ul {
+    @apply opacity-100
+}
+
+.navigation__desktop li ul li{
+    @apply bg-darkBlue rounded-xl  px-4 py-2   ;
+    box-shadow: 0 3px 8px rgba(0,0,0,.06), 0 6px 24px rgba(0,0,0,.12);
+}
+.navigation__desktop li ul li a{
+    @apply   py-2 px-4 hover:bg-hardBlue
+}
+.options__cta{
+    @apply flex gap-4 
+}
+.icon__user{
+    @apply flex items-center justify-center;
+}
+.options__cta .btn{
+    @apply hidden 
+    laptop:block
+}
+/* End Navigation */
+
+/* Form */
+.container__form{
+    @apply flex flex-col self-center  justify-center items-center mobile:w-11/12 w-8/12 max-w-2xl gap-y-5
+}
+.error-message{
+    @apply self-center w-full max-w-2xl  text-error-style
+}
+.error-message > a{
+    @apply font-bold
+}
+.block__form{
+    @apply flex flex-col w-full gap-2
+}
+.block__form input{
+    @apply  w-full outline-none text-dark-gray-100 placeholder:text-dark-gray-100 py-2 px-2 rounded-md focus:border-darkBlue border-dark-gray-100 border
+}
+.block__form label{
+    @apply text-dark-gray-100 font-semibold
+}
+.container__form .form{
+    @apply flex flex-col w-full gap-4
+}
+.form .btn--pill{
+    @apply w-fit self-center rounded-md py-2 px-6 text-white
+}
+
+/* End Form */
+
+
+/* Start Footer */
+.footer{
+    background-color: #0A6FE3;
+}
+.content__footer{
+    @apply flex flex-col text-white max-w-7xl m-auto font-normal font-roboto
+    items-start
+    laptop:flex-row laptop:gap-x-10
+    
+}
+.content__footer .list__menu{
+    @apply flex flex-row
+    laptop:flex-col laptop:gap-4
+}
+
+.footer__logo{
+    @apply w-full px-6
+    laptop:max-w-[180px] laptop:max-h-[36px] laptop:object-contain
+}
+.footer__links{
+    @apply flex flex-row flex-wrap  gap-4
+    laptop:w-full laptop:justify-between
+}
+.footer__links p{
+    @apply max-w-[180px]
+}
+.list__social{
+    @apply flex flex-row flex-wrap gap-6
+}
+.link__social{
+    @apply w-6 h-6 block
+}
+.link__social svg{
+    @apply w-full object-contain fill-white
+}
+/* End footer */
+
+.none{
+    @apply hidden
+}
